@@ -29,6 +29,8 @@ function addKeyboard(value) {
   for (let i = 0; i < value; i++) {
     if (textBtn.includes(mainСharacters[i])) {
       keyboardContainer.appendChild(addElemnt(`${mainСharacters[i]}`, 'btn-dark', 'div'));
+    } else if (mainСharacters[i] === '') {
+      keyboardContainer.appendChild(addElemnt(`${mainСharacters[i]}`, 'space', 'div'));
     } else {
       keyboardContainer.appendChild(addElemnt(`${mainСharacters[i]}`, 'btn', 'div'));
     }
@@ -44,5 +46,17 @@ function addElemnt(valueElement, classElement, elementType) {
   let element = document.createElement(`${elementType}`);
   element.classList.add(`${classElement}`);
   element.innerHTML = `${valueElement}`;
+
+  if (`${valueElement}` === '') {
+    element.id = `space`;
+  } else {
+    element.id = `${valueElement}`;
+  }
+
   return element;
+}
+
+// Функция выделения кнопки при нажатии
+function addActivestyle(element) {
+
 }
