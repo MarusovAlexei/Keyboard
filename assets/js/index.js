@@ -5,11 +5,25 @@ const mainСharactersEn = ["`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"
   "Shift", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/", "▲", "Shift",
   "Ctrl", "Win", "Alt", "", "Alt", "Ctrl", "◀", "▼", "▶",];
 
+// все клавиши английской раскладки при нажатии на shift
+const mainСharactersEnShift = ["~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "+", "Backspace",
+  "Tab", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "{", "}", "|",
+  "Caps lock", "A", "S", "D", "F", "G", "H", "J", "K", "L", ":", '"', "Enter",
+  "Shift", "Z", "X", "C", "V", "B", "N", "M", "<", ">", "?", "▲", "Shift",
+  "Ctrl", "Win", "Alt", "", "Alt", "Ctrl", "◀", "▼", "▶",];
+
 // все клавиши русской раскладки
 const mainСharactersRu = ["ё", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "Backspace",
   "Tab", "й", "ц", "у", "к", "е", "н", "г", "ш", "щ", "з", "х", "ъ", "\\",
   "Caps lock", "ф", "ы", "в", "а", "п", "р", "о", "л", "д", "ж", "э", "Enter",
   "Shift", "я", "ч", "с", "м", "и", "т", "ь", "б", "ю", ".", "▲", "Shift",
+  "Ctrl", "Win", "Alt", "", "Alt", "Ctrl", "◀", "▼", "▶",];
+
+// все клавиши русской раскладки при нажатии на shift
+const mainСharactersRuShift = ["~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "+", "Backspace",
+  "Tab", "Й", "Ц", "У", "К", "Е", "Н", "Г", "Ш", "Щ", "З", "Х", "Ъ", "/",
+  "Caps lock", "Ф", "Ы", "В", "А", "П", "Р", "О", "Л", "Д", "Ж", "Э", "Enter",
+  "Shift", "Я", "Ч", "С", "М", "И", "Т", "Ь", "Б", "Ю", ",", "▲", "Shift",
   "Ctrl", "Win", "Alt", "", "Alt", "Ctrl", "◀", "▼", "▶",];
 
 // Коды клавиш (all 63)
@@ -73,7 +87,7 @@ function deleteKeyboard() {
 
 // Добавляем описание
 document.body.append(addElemnt('Клавиатура создана в операционной системе Windows', 'description', 'div'));
-document.body.append(addElemnt('Для переключения языка комбинация: левыe shift + alt', 'description', 'div'));
+document.body.append(addElemnt('Для переключения языка комбинация: левыe ctrl + alt', 'description', 'div'));
 document.body.append(addElemnt('Для ввода текста поставьте курсор в поле ввода!', 'description', 'div'));
 
 // Функция добавления элемента на страницу ('текст', 'класс, 'тип элемента')
@@ -86,17 +100,27 @@ function addElemnt(valueElement, classElement, elementType, elementId = 'elem') 
   return element;
 }
 
-// Функция выделения кнопки при нажатии
+// Добавляем событие при нажатии и отпуске кнопки
 document.onkeydown = document.onkeyup = document.onkeypress = changeBtnClass;
 
+// Функция для: 
+// 1. добавления и удаления класса active, 
+// 2. вывода текста в textarea, 
+// 3. переключения языков,
+// 4. переключение между регистрами
 function changeBtnClass(event) {
 
+  // №1 ACTIVE
   // Проверяем, что кнопка нажата и добавляем класс active
   if (event.type == 'keydown') {
     document.querySelector(`#${event.code}`).classList.add('btn-active');
 
+    // №2 TEXTAREA
+    // условие - только при курсоре в текстареа
+    // document.querySelector('.keyboard__display').onfocus
+
     // Если кнопка цифра, символ или буква, то выводим ее
-    if (!keySpecialCodes.includes(event.code) && document.querySelector('.keyboard__display').onfocus) {
+    if (!keySpecialCodes.includes(event.code)) {
       addText(event.key);
     }
   }
@@ -106,8 +130,9 @@ function changeBtnClass(event) {
     document.querySelector(`#${event.code}`).classList.remove('btn-active');
   }
 
-  // Переключение языка
-  if (event.shiftKey && event.altKey) {
+  // №3 Переключение языка
+  // Проверяем, зажаты ли нужные клавиши
+  if (event.ctrlKey && event.altKey) {
     deleteKeyboard();
     keyboard.append(addElemnt('', 'keyboard__container', 'div'));
     const keyboardContainer = document.querySelector('.keyboard__container');
@@ -115,11 +140,51 @@ function changeBtnClass(event) {
       language = "ru";
       addKeyboard(63, mainСharactersRu, keyboardContainer);
     } else {
-      language = "en"
+      language = "en";
+      addKeyboard(63, mainСharactersEn, keyboardContainer);
+    }
+  }
+
+  // №4 Переключение между регистрами
+  // Проеряем, зажата ли клавиша shift
+  if (event.type == 'keydown' && event.code == 'ShiftLeft') {
+    deleteKeyboard();
+    keyboard.append(addElemnt(' ', 'keyboard__container', 'div'));
+    const keyboardContainer = document.querySelector('.keyboard__container');
+    if (language === "ru") {
+      addKeyboard(63, mainСharactersRuShift, keyboardContainer);
+    } else {
+      addKeyboard(63, mainСharactersEnShift, keyboardContainer);
+    }
+  } else if (event.type == 'keyup' && event.code == 'ShiftLeft') {
+    deleteKeyboard();
+    keyboard.append(addElemnt('', 'keyboard__container', 'div'));
+    const keyboardContainer = document.querySelector('.keyboard__container');
+    if (language === "ru") {
+      addKeyboard(63, mainСharactersRu, keyboardContainer);
+    } else {
       addKeyboard(63, mainСharactersEn, keyboardContainer);
     }
   }
 }
+
+// Ввод символов с виртуальной клавиатуры
+// Создаем массив всех кнопок
+let virtualBtnOnKeyboard = [];
+virtualBtnOnKeyboard.push(Array.from(document.querySelectorAll('.btn')));
+virtualBtnOnKeyboard.push(Array.from(document.querySelectorAll('.btn-dark')));
+virtualBtnOnKeyboard.push(Array.from(document.querySelectorAll('.space')));
+
+// Вешаем события на кнопки с символами - ввод в текстовое поле
+virtualBtnOnKeyboard.flat(1).forEach(elem => {
+  elem.addEventListener('click', () => {
+    if (elem.innerHTML == '') {
+      addText(' ');
+    } else if (elem.classList[0] !== "btn-dark") {
+      addText(elem.innerHTML);
+    }
+  });
+});
 
 // Ввод текста в textarea
 function addText(value) {
@@ -127,6 +192,12 @@ function addText(value) {
   textArea.innerHTML = textArea.value + `${value}`;
 }
 
+// Создание чистого контейнера для клавиатуры
+function createContainer() {
+  deleteKeyboard();
+  keyboard.append(addElemnt('', 'keyboard__container', 'div'));
+  const keyboardContainer = document.querySelector('.keyboard__container');
+}
 
 
 
