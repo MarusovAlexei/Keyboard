@@ -63,6 +63,18 @@ body {
   align-items: center;
 }
 
+.btn:hover {
+  background-color: rgb(49, 54, 126);
+}
+
+.btn-dark:hover {
+  background-color: rgb(49, 54, 126);
+}
+
+.btn:hover {
+  background-color: rgb(49, 54, 126);
+}
+
 .btn-dark {
   min-width: 61px;
   height: 40px;
@@ -97,10 +109,6 @@ body {
   top: 7px;
 }
 
-.btn-active {
-  background-color: rgb(49, 54, 126);
-}
-
 .space {
   width: 115px;
   height: 40px;
@@ -111,4 +119,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.btn-active {
+  background-color: rgb(49, 54, 126);
+}
+
+.space:hover {
+  background-color: rgb(49, 54, 126);
 }
