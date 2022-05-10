@@ -186,7 +186,7 @@ virtualBtnOnKeyboard.flat(1).forEach(elem => {
     addPressBtn(elem);
 
     window.addEventListener('mouseup', () => {
-      addPressBtn(elem);
+      addPressBtnUp(elem);
     })
   });
 
@@ -200,7 +200,11 @@ function addText(value) {
 
 // Анимация нажатия кнопки
 function addPressBtn(elem) {
-  elem.classList.toggle('virtual-press-btn')
+  elem.classList.add('virtual-press-btn')
+}
+
+function addPressBtnUp(elem) {
+  elem.classList.remove('virtual-press-btn')
 }
 
 
