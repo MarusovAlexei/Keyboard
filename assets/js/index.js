@@ -61,7 +61,11 @@ keyboard.append(addElemnt('', 'keyboard__container', 'div'));
 
 // Добавляем клавиатуру
 const keyboardContainer = document.querySelector('.keyboard__container');
-addKeyboard(63, mainСharactersEn, keyboardContainer);
+if (localStorage.getItem('language') === 'ru') {
+  addKeyboard(63, mainСharactersRu, keyboardContainer);
+} else {
+  addKeyboard(63, mainСharactersEn, keyboardContainer);
+}
 
 // Функция добавления клавиатуры
 function addKeyboard(value, mainСharacters, keyboardContainer) {
@@ -170,6 +174,7 @@ function changeBtnClass(event) {
       language = "en";
       addKeyboard(63, mainСharactersEn, keyboardContainer);
     }
+    saveLocalStorage(language);
   }
 
   // №4 Переключение между регистрами
@@ -240,9 +245,14 @@ function deleteTextSymbol() {
 
 // Анимация нажатия кнопки
 function addPressBtn(elem) {
-  elem.classList.add('virtual-press-btn')
+  elem.classList.add('virtual-press-btn');
 }
 
 function addPressBtnUp(elem) {
-  elem.classList.remove('virtual-press-btn')
+  elem.classList.remove('virtual-press-btn');
+}
+
+// Сохранение языка при перезагрузке страницы
+function saveLocalStorage() {
+  localStorage.setItem('language', language);
 }
