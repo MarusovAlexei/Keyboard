@@ -89,7 +89,6 @@ function deleteKeyboard() {
 // Добавляем описание
 document.body.append(addElemnt('Клавиатура создана в операционной системе Windows', 'description', 'div'));
 document.body.append(addElemnt('Для переключения языка комбинация: левыe ctrl + alt', 'description', 'div'));
-document.body.append(addElemnt('Для ввода текста поставьте курсор в поле ввода!', 'description', 'div'));
 
 // Функция добавления элемента на страницу ('текст', 'класс, 'тип элемента')
 function addElemnt(valueElement, classElement, elementType, elementId = 'elem') {
@@ -219,6 +218,8 @@ virtualBtnOnKeyboard.flat(1).forEach(elem => {
       addText(' ');
     } else if (elem.classList[0] !== "btn-dark") {
       addText(elem.innerHTML);
+    } else if (elem.innerHTML == "Backspace") {
+      deleteTextSymbol();
     }
 
     addPressBtn(elem);
@@ -234,6 +235,13 @@ virtualBtnOnKeyboard.flat(1).forEach(elem => {
 function addText(value) {
   const textArea = document.querySelector('.keyboard__display');
   textArea.innerHTML = textArea.value + `${value}`;
+}
+
+// Удаление символа из текста в textarea
+function deleteTextSymbol() {
+  console.log("yes")
+  const textArea = document.querySelector('.keyboard__display');
+  textArea.innerHTML = textArea.innerHTML.slice(0, textArea.innerHTML.length - 1)
 }
 
 // Анимация нажатия кнопки
