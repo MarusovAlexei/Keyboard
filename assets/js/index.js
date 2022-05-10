@@ -116,9 +116,6 @@ function changeBtnClass(event) {
     document.querySelector(`#${event.code}`).classList.add('btn-active');
 
     // №2 TEXTAREA
-    // условие - только при курсоре в текстареа
-    // document.querySelector('.keyboard__display').onfocus
-
     // Если кнопка цифра, символ или буква, то выводим ее
     if (!keySpecialCodes.includes(event.code)) {
       addText(event.key);
@@ -183,11 +180,12 @@ virtualBtnOnKeyboard.flat(1).forEach(elem => {
     } else if (elem.classList[0] !== "btn-dark") {
       addText(elem.innerHTML);
     }
+
     addPressBtn(elem);
 
     window.addEventListener('mouseup', () => {
       addPressBtnUp(elem);
-    })
+    });
   });
 
 });
