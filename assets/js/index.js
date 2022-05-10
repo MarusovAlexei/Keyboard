@@ -49,6 +49,7 @@ const keySpecialCodes = ["Backquote", "Backspace", "Tab", "CapsLock", "Enter", "
 
 // Язык страницы
 let language = "en";
+let caps = true;
 
 // Добавляем заголовок на страницу
 document.body.append(addElemnt('Virtual keyboard', 'title', 'div'));
@@ -120,6 +121,41 @@ function changeBtnClass(event) {
     if (!keySpecialCodes.includes(event.code)) {
       addText(event.key);
     }
+
+    // Если нажат TAB
+    if (event.code == "Tab") {
+      addText("    ");
+    }
+
+    // Если нажат CAPSLOCK
+    if (event.code == "CapsLock" && caps) {
+      deleteKeyboard();
+      keyboard.append(addElemnt(' ', 'keyboard__container', 'div'));
+      const keyboardContainer = document.querySelector('.keyboard__container');
+      if (language === "ru") {
+        addKeyboard(63, mainСharactersRuShift, keyboardContainer);
+      } else {
+        addKeyboard(63, mainСharactersEnShift, keyboardContainer);
+      }
+
+      // Меняем внешний вид caps lock
+      document.getElementById('CapsLock').classList.add('caps')
+      caps = false;
+    } else if (event.code == "CapsLock" && !caps) {
+
+      // Переключаем на маленький шрифт
+      deleteKeyboard();
+      keyboard.append(addElemnt(' ', 'keyboard__container', 'div'));
+      const keyboardContainer = document.querySelector('.keyboard__container');
+
+      if (language === "ru") {
+        addKeyboard(63, mainСharactersRu, keyboardContainer);
+      } else {
+        addKeyboard(63, mainСharactersEn, keyboardContainer);
+      }
+
+      caps = true;
+    }
   }
 
   // когда кнопка отпущена, мы убираем класс active 
@@ -153,6 +189,10 @@ function changeBtnClass(event) {
     } else {
       addKeyboard(63, mainСharactersEnShift, keyboardContainer);
     }
+
+    // Выделяем shift
+    document.querySelector(`#ShiftLeft`).classList.add('btn-active');
+
   } else if (event.type == 'keyup' && event.code == 'ShiftLeft') {
     deleteKeyboard();
     keyboard.append(addElemnt('', 'keyboard__container', 'div'));
@@ -212,37 +252,3 @@ function createContainer() {
   keyboard.append(addElemnt('', 'keyboard__container', 'div'));
   const keyboardContainer = document.querySelector('.keyboard__container');
 }
-
-
-
-// event
-
-// isTrusted: true
-// altKey: false
-// bubbles: true
-// cancelBubble: false
-// cancelable: true
-// charCode: 0
-// code: "KeyZ"
-// composed: true
-// ctrlKey: false
-// currentTarget: null
-// defaultPrevented: false
-// detail: 0
-// eventPhase: 0
-// isComposing: false
-// key: "Z"
-// keyCode: 90
-// location: 0
-// metaKey: false
-// path: (4) [body, html, document, Window]
-// repeat: false
-// returnValue: true
-// shiftKey: true
-// sourceCapabilities: InputDeviceCapabilities {firesTouchEvents: false}
-// srcElement: body
-// target: body
-// timeStamp: 12733.899999856949
-// type: "keydown"
-// view: Window {window: Window, self: Window, document: document, name: '', location: Location, …}
-// which: 90

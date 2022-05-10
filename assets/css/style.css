@@ -137,3 +137,7 @@ body {
 .virtual-press-btn {
   border-radius: 20px;
 }
+
+.caps {
+  background-color: rgb(51, 192, 62);
+}
