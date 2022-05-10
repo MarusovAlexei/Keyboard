@@ -134,6 +134,6 @@ body {
   background-color: rgb(49, 54, 126);
 }
 
-.test {
-  background-color: red;
+.virtual-press-btn {
+  border-radius: 20px;
 }

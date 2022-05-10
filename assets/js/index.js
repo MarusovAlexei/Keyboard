@@ -177,13 +177,19 @@ virtualBtnOnKeyboard.push(Array.from(document.querySelectorAll('.space')));
 
 // Вешаем события на кнопки с символами - ввод в текстовое поле
 virtualBtnOnKeyboard.flat(1).forEach(elem => {
-  elem.addEventListener('click', () => {
+  elem.addEventListener('mousedown', () => {
     if (elem.innerHTML == '') {
       addText(' ');
     } else if (elem.classList[0] !== "btn-dark") {
       addText(elem.innerHTML);
     }
+    addPressBtn(elem);
+
+    window.addEventListener('mouseup', () => {
+      addPressBtn(elem);
+    })
   });
+
 });
 
 // Ввод текста в textarea
@@ -191,6 +197,12 @@ function addText(value) {
   const textArea = document.querySelector('.keyboard__display');
   textArea.innerHTML = textArea.value + `${value}`;
 }
+
+// Анимация нажатия кнопки
+function addPressBtn(elem) {
+  elem.classList.toggle('virtual-press-btn')
+}
+
 
 // Создание чистого контейнера для клавиатуры
 function createContainer() {
