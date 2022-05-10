@@ -34,14 +34,9 @@ const keyCodes = ["Backquote", "Digit1", "Digit2", "Digit3", "Digit4", "Digit5",
   "ShiftLeft", "KeyZ", "KeyX", "KeyC", "KeyV", "KeyB", "KeyN", "KeyM", "Comma", "Period", "Slash", "ArrowUp",
   "ShiftRight", "ControlLeft", "MetaLeft", "AltLeft", "Space", "AltRight", "ControlRight", "ArrowLeft", "ArrowDown", "ArrowRight",];
 
-// 13 special characters
-const specialСharacters = ["~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "+",];
-
 // text btn
 const textBtn = ["Backspace", "Tab", "Caps lock", "Enter", "Shift", "▲", "Shift", "Ctrl", "Win",
   "Alt", "Alt", "Ctrl", "◀", "▼", "▶",];
-
-
 
 // Коды спецклавиш
 const keySpecialCodes = ["Backquote", "Backspace", "Tab", "CapsLock", "Enter", "ShiftLeft", "ArrowUp", "ShiftRight",
@@ -239,9 +234,8 @@ function addText(value) {
 
 // Удаление символа из текста в textarea
 function deleteTextSymbol() {
-  console.log("yes")
   const textArea = document.querySelector('.keyboard__display');
-  textArea.innerHTML = textArea.innerHTML.slice(0, textArea.innerHTML.length - 1)
+  textArea.innerHTML = textArea.innerHTML.slice(0, textArea.innerHTML.length - 1);
 }
 
 // Анимация нажатия кнопки
@@ -251,12 +245,4 @@ function addPressBtn(elem) {
 
 function addPressBtnUp(elem) {
   elem.classList.remove('virtual-press-btn')
-}
-
-
-// Создание чистого контейнера для клавиатуры
-function createContainer() {
-  deleteKeyboard();
-  keyboard.append(addElemnt('', 'keyboard__container', 'div'));
-  const keyboardContainer = document.querySelector('.keyboard__container');
 }
