@@ -66,6 +66,7 @@ document.onkeydown = document.onkeyup = document.onkeypress = changeBtnClass;
 function changeBtnClass(event) {
   if (event.type == 'keydown') {
     document.querySelector(`#${event.code}`).classList.add('btn-active');
+    addText(event.key);
   }
 
   if (event.type == 'keyup') {
@@ -73,13 +74,10 @@ function changeBtnClass(event) {
   }
 }
 
-
-
-
 // Проверка, что ввели в textarea
-const textArea = document.querySelector('.keyboard__display');
-textArea.onkeypress = function (event) {
-  console.log(event)
+function addText(value) {
+  const textArea = document.querySelector('.keyboard__display');
+  textArea.innerHTML = textArea.value + `${value}`;
 }
 
 
